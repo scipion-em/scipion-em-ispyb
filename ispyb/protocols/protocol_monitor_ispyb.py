@@ -36,6 +36,7 @@ from pathlib2 import Path
 from errno import ENOENT
 from sys import float_info
 import mrcfile
+from pyworkflow.gui.plotter import Plotter
 
 import pyworkflow.utils as pwutils
 import pyworkflow.protocol.params as params
@@ -45,6 +46,7 @@ from pyworkflow.em.protocol import ProtMonitor, Monitor, PrintNotifier
 from pyworkflow.em.protocol import ProtImportMovies, ProtAlignMovies, ProtCTFMicrographs
 from pyworkflow.gui import getPILImage
 from pyworkflow.protocol.constants import STATUS_RUNNING
+import pyworkflow.em.metadata as md
 
 
 class ProtMonitorISPyB(ProtMonitor):

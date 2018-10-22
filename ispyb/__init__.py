@@ -36,7 +36,7 @@ import os
 import pyworkflow.em
 
 from pyworkflow.utils import Environ
-from .constants import ISPYB_HOME, V1_0_0
+from ispyb.constants import ISPYB_HOME, V1_0_0
 
 
 _logo = None
@@ -52,7 +52,7 @@ class Plugin(pyworkflow.em.Plugin):
 
     @classmethod
     def getEnviron(cls):
-        """ Setup the environment variables needed to launch Appion. """
+        """ Setup the environment variables needed to launch ispyb. """
         environ = Environ(os.environ)
 
         environ.update({
