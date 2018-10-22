@@ -1,10 +1,8 @@
 # **************************************************************************
 # *
-# * Authors:     J.M. De la Rosa Trevin (jmdelarosa@cnb.csic.es) [1]
-# *              Kevin Savage (kevin.savage@diamond.ac.uk) [2]
+# * Authors:    Yunior C. Fonseca Reyna (cfonseca@cnb.csic.es)
 # *
-# * [1] Unidad de  Bioinformatica of Centro Nacional de Biotecnologia , CSIC
-# * [2] Diamond Light Source, Ltd
+# * Unidad de  Bioinformatica of Centro Nacional de Biotecnologia , CSIC
 # *
 # * This program is free software; you can redistribute it and/or modify
 # * it under the terms of the GNU General Public License as published by
@@ -26,9 +24,7 @@
 # *
 # **************************************************************************
 
-from bibtex import _bibtex # Load bibtex dict with references
+ISPYB_HOME = 'ISPYB_HOME'
 
-_logo = None
-_references = ['Delageniere2011']
-
-from protocol_monitor_ispyb import ProtMonitorISPyB
+# Supported version
+V1_0_0 = 'V1_0_0'
