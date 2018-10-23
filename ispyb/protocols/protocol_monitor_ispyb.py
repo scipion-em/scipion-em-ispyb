@@ -29,6 +29,7 @@
 from os import environ
 from os.path import realpath, join, dirname, exists, basename, abspath
 from collections import OrderedDict
+from itertools import izip
 import math
 import re
 from datetime import datetime
