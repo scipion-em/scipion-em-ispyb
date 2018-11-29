@@ -1,8 +1,10 @@
 # **************************************************************************
 # *
-# * Authors:    Yunior C. Fonseca Reyna (cfonseca@cnb.csic.es)
+# * Authors:     J.M. De la Rosa Trevin (jmdelarosa@cnb.csic.es) [1]
+# *              Kevin Savage (kevin.savage@diamond.ac.uk) [2]
 # *
-# * Unidad de  Bioinformatica of Centro Nacional de Biotecnologia , CSIC
+# * [1] Unidad de  Bioinformatica of Centro Nacional de Biotecnologia , CSIC
+# * [2] Diamond Light Source, Ltd
 # *
 # * This program is free software; you can redistribute it and/or modify
 # * it under the terms of the GNU General Public License as published by
@@ -24,7 +26,22 @@
 # *
 # **************************************************************************
 
-ISPYB_HOME = 'ISPYB_HOME'
 
-# Supported version
-V1_0_0 = 'V1_0_0'
+
+
+"""
+This package contains the protocols and data for ISPYB
+"""
+import os
+import pyworkflow.em
+
+
+_logo = 'ispyb_logo.png'
+_references = ['Delageniere2011']
+
+
+class Plugin(pyworkflow.em.Plugin):
+    pass
+
+
+pyworkflow.em.Domain.registerPlugin(__name__)
