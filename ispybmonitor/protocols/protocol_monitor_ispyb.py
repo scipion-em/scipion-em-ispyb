@@ -43,6 +43,7 @@ import pyworkflow.utils as pwutils
 import pyworkflow.protocol.params as params
 from pyworkflow import VERSION_1_1
 from pyworkflow.em import ImageHandler
+from pyworkflow.protocol import getUpdatedProtocol
 from pyworkflow.em.protocol import ProtMonitor, Monitor, PrintNotifier
 from pyworkflow.em.protocol import ProtImportMovies, ProtAlignMovies, ProtCTFMicrographs
 from pyworkflow.gui import getPILImage
@@ -62,7 +63,7 @@ class ProtMonitorISPyB(ProtMonitor):
         group = form.addGroup('Experiment')
         group.addParam('visit', params.StringParam,
                       label="Visit",
-                      help="Visit")
+                      help="Visit. If you're using test data, you can enter cm14451-2")
 
         form.addParam('db', params.EnumParam,
                       choices=["production", "devel", "test"],
@@ -130,8 +131,8 @@ class MonitorISPyB(Monitor):
     def step(self):
         self.info("MonitorISPyB: only one step")
 
-        prots = [self.getUpdatedProtocol(p) for p in self.inputProtocols]
-        finished = [] # store True if protocol not running
+        prots = [getUpdatedProtocol(p) for p in self.inputProtocols]
+        finished = []  # store True if protocol not running
         updateImageIds = []  # Store obj ids that have changes
         updateAlignIds = []  # Store obj ids that have changes
         updateCTFIds = []  # Store obj ids that have changes
@@ -315,8 +316,8 @@ class MonitorISPyB(Monitor):
         except Exception as ex:
             # this can fail for all sorts of reasons which probably don't matter
             # e.g. the metadata hasn't been written yet.
-            print "failed to get metadata for {}, probably not an issue".format(data_path)
-            print ex
+            print("failed to get metadata for {}, probably not an issue".format(data_path))
+            print(ex)
 
     @staticmethod
     def convert_volts_to_debroglie_wavelength(volts):
