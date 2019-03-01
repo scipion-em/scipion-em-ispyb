@@ -42,7 +42,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='scipion-em-ispyb',  # Required
-    version='1.0.0a0',  # Required
+    version='1.0.0',  # Required
     description='ISPyB monitor for scipion',  # Required
     long_description=long_description,  # Optional
     url='https://github.com/scipion-em/scipion-em-ispyb',
@@ -52,6 +52,6 @@ setup(
     packages=find_packages(),
     install_requires=['ispyb', 'pathlib2', 'mrcfile'],
     package_data={
-       'ispybmonitor': ['ispyb_logo.png'],
+       'ispybmonitor': ['ispyb_logo.png','protocols.conf'],
     }
 )
