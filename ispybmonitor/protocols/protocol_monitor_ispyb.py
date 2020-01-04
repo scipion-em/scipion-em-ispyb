@@ -29,7 +29,10 @@
 from os import environ
 from os.path import realpath, join, dirname, exists, basename, abspath
 from collections import OrderedDict
-from itertools import izip
+try:
+    from itertools import izip
+except ImportError:
+    izip = zip
 import math
 import re
 from datetime import datetime
@@ -37,22 +40,23 @@ from pathlib2 import Path
 from errno import ENOENT
 from sys import float_info
 import mrcfile
-from pyworkflow.gui.plotter import Plotter
 
+from pyworkflow.gui.plotter import Plotter
 import pyworkflow.utils as pwutils
 import pyworkflow.protocol.params as params
 from pyworkflow import VERSION_1_1
-from pyworkflow.em import ImageHandler
+from pwem.convert import ImageHandler
 from pyworkflow.protocol import getUpdatedProtocol
-from pyworkflow.em.protocol import ProtMonitor, Monitor, PrintNotifier
-from pyworkflow.em.protocol import ProtImportMovies, ProtAlignMovies, ProtCTFMicrographs
-from pyworkflow.gui import getPILImage
+from pwem.protocols import (ProtMonitor, Monitor, PrintNotifier,
+                            ProtImportMovies, ProtAlignMovies,
+                            ProtCTFMicrographs)
+from pwem.viewers import getPILImage
 from pyworkflow.protocol.constants import STATUS_RUNNING
-import pyworkflow.em.metadata as md
+import pwem.metadata as md
 
 
 class ProtMonitorISPyB(ProtMonitor):
-    """ Monitor to communicated with ISPyB system at Diamond.
+    """ Monitor to communicate with ISPyB system at Diamond.
     """
     _label = 'monitor to ISPyB'
     _lastUpdateVersion = VERSION_1_1
@@ -89,6 +93,7 @@ class ProtMonitorISPyB(ProtMonitor):
         monitor.addNotifier(PrintNotifier())
         monitor.loop()
 
+
 class MonitorISPyB(Monitor):
     """ This will will be monitoring a CTF estimation protocol.
     It will internally handle a database to store produced
@@ -112,12 +117,13 @@ class MonitorISPyB(Monitor):
         self.project = kwargs['project']
         self.inputProtocols = self._sortInputProtocols(kwargs['inputProtocols'])
         self.ispybDb = ISPyBdb(experimentParams={'visit': self.visit})
+
     @staticmethod
     def _sortInputProtocols(protList):
         # we need sorted input protocols in order to process objects correctly
         movieProts = []
         alignProts = []
-        ctfProts   = []
+        ctfProts = []
         for p in protList:
             if isinstance(p, ProtImportMovies):
                 movieProts.append(p)
@@ -328,9 +334,8 @@ class MonitorISPyB(Monitor):
 
         u = volts * 1e3
         return (planks_constant /
-                (2 * rest_mass_of_electron * charge_of_electron * u + ((charge_of_electron * u / speed_of_light)** 2))**0.5
-            ) * 1e10
-
+                (2 * rest_mass_of_electron * charge_of_electron * u + ((charge_of_electron * u / speed_of_light) ** 2))**0.5
+                ) * 1e10
 
     def update_align_params(self, prot, updateIds):
         for mic in self.iter_updated_set(prot.outputMicrographs):
@@ -415,7 +420,7 @@ class ImageGenerator:
         output_root = join(self.images_path, basename(outputName))
         output_file = output_root + '.jpg'
 
-        print "Generating image: ", output_file
+        print("Generating image: ", output_file)
 
         if not exists(output_file):
             from PIL import Image

@@ -52,6 +52,6 @@ setup(
     packages=find_packages(),
     install_requires=['ispyb', 'pathlib2', 'mrcfile'],
     package_data={
-       'ispybmonitor': ['ispyb_logo.png','protocols.conf'],
+       'ispybmonitor': ['ispyb_logo.png', 'protocols.conf'],
     }
 )

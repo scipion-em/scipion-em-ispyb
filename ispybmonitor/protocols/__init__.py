@@ -24,5 +24,5 @@
 # *
 # **************************************************************************
 
-from protocol_monitor_ispyb import (ImageGenerator, ISPyBdb, MonitorISPyB,
-                                    ProtMonitorISPyB)
+from .protocol_monitor_ispyb import (ImageGenerator, ISPyBdb, MonitorISPyB,
+                                     ProtMonitorISPyB)

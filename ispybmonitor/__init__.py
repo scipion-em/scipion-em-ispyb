@@ -26,22 +26,14 @@
 # *
 # **************************************************************************
 
-
-
-
-"""
-This package contains the protocols and data for ISPYB
-"""
-import os
-import pyworkflow.em
-
+import pwem
 
 _logo = 'ispyb_logo.png'
 _references = ['Delageniere2011']
 
 
-class Plugin(pyworkflow.em.Plugin):
+class Plugin(pwem.Plugin):
     pass
 
 
-pyworkflow.em.Domain.registerPlugin(__name__)
+pwem.Domain.registerPlugin(__name__)
