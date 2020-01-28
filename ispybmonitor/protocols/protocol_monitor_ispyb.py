@@ -45,14 +45,14 @@ from pyworkflow.gui.plotter import Plotter
 import pyworkflow.utils as pwutils
 import pyworkflow.protocol.params as params
 from pyworkflow import VERSION_1_1
-from pwem.convert import ImageHandler
+from pwem.emlib.image import ImageHandler
 from pyworkflow.protocol import getUpdatedProtocol
 from pwem.protocols import (ProtMonitor, Monitor, PrintNotifier,
                             ProtImportMovies, ProtAlignMovies,
                             ProtCTFMicrographs)
 from pwem.viewers import getPILImage
 from pyworkflow.protocol.constants import STATUS_RUNNING
-import pwem.metadata as md
+import pwem.emlib.metadata as md
 
 
 class ProtMonitorISPyB(ProtMonitor):
