@@ -52,7 +52,172 @@ import pyworkflow.em.metadata as md
 
 
 class ProtMonitorISPyB(ProtMonitor):
-    """ Monitor to communicated with ISPyB system at Diamond.
+    """
+    Monitors cryo-EM data acquisition and processing workflows and communicates
+    experimental metadata, motion-correction results, and CTF estimation
+    information to the ISPyB information management system used at large-scale
+    microscopy facilities.
+
+    AI Generated:
+
+    Monitor to ISPyB (ProtMonitorISPyB) - User Manual
+
+        Overview
+
+        The Monitor to ISPyB protocol provides a bridge between cryo-EM data
+        processing workflows and the ISPyB laboratory information management
+        system. Its purpose is to automatically collect relevant acquisition,
+        processing, and quality-control information and make it available within
+        the facility database environment. This enables researchers, facility
+        staff, and project managers to track experimental progress in near
+        real time while maintaining a centralized record of data collection and
+        processing activities.
+
+        In a typical cryo-EM workflow, movies are first imported, then corrected
+        for beam-induced motion, and finally analyzed through CTF estimation.
+        The protocol continuously follows these stages and records the resulting
+        metadata, creating a coherent representation of the experiment within
+        ISPyB. This reduces manual reporting effort and improves traceability
+        throughout the life cycle of a project.
+
+        Inputs and General Workflow
+
+        The protocol requires one or more upstream processing workflows that
+        generate acquisition and image-processing results. These workflows are
+        monitored over time, allowing new information to be incorporated as
+        processing progresses. The protocol is designed for streaming and
+        high-throughput environments where data are continuously produced during
+        acquisition sessions.
+
+        Users must provide the experimental visit identifier together with the
+        target database environment. The visit associates the reported
+        information with the correct experiment, while the database selection
+        determines whether information is written to production, development,
+        or testing infrastructures.
+
+        Data Collection Monitoring
+
+        One of the primary objectives of the protocol is to maintain an updated
+        description of the data collection session. Information related to image
+        acquisition, microscope settings, detector characteristics, exposure
+        conditions, and recording parameters can be associated with the ongoing
+        experiment. This allows ISPyB to serve as a comprehensive repository of
+        acquisition metadata.
+
+        As additional data become available, the protocol updates the experiment
+        record rather than creating disconnected entries. This ensures that the
+        final database representation reflects the complete history of the
+        acquisition session.
+
+        Movie Registration and Tracking
+
+        Imported movies are registered as individual acquisition products within
+        the database. Each movie becomes associated with the corresponding data
+        collection session and receives the metadata required for long-term
+        tracking and auditing.
+
+        For facility operations, this capability is especially important because
+        it allows users and staff to identify exactly which files belong to a
+        given experiment, where they were acquired, and under which imaging
+        conditions they were collected. This information supports downstream
+        processing, archiving, and reproducibility efforts.
+
+        Motion Correction Reporting
+
+        Motion correction is a critical quality-control stage in cryo-EM data
+        processing. The protocol records information describing image alignment,
+        frame-to-frame drift behavior, accumulated motion, and representative
+        visualization products generated during processing.
+
+        By storing these results in ISPyB, users gain access to objective
+        indicators of data quality while acquisition is still ongoing. Large
+        drift values, unstable alignments, or unexpected motion patterns can be
+        identified early, allowing corrective action before substantial
+        acquisition time is lost.
+
+        The protocol also supports the preservation of visual summaries that can
+        assist both facility personnel and researchers when reviewing data
+        collection performance.
+
+        CTF Estimation Monitoring
+
+        Contrast Transfer Function estimation provides a first assessment of the
+        achievable quality and interpretability of cryo-EM data. The protocol
+        collects defocus measurements, astigmatism indicators, estimated
+        resolution values, and associated diagnostic visualizations, making
+        these results available through ISPyB.
+
+        Continuous reporting of CTF metrics allows users to evaluate microscope
+        performance and dataset quality during acquisition. This is particularly
+        valuable for long data-collection sessions where rapid feedback can
+        influence experimental decisions.
+
+        Image Generation and Visualization
+
+        To improve usability within database interfaces, the protocol generates
+        visual representations of processing results. These images provide
+        convenient previews of micrographs, diagnostic plots, and frequency-space
+        analyses that can be reviewed directly from facility management systems.
+
+        Such visual products are intended to facilitate rapid quality assessment
+        without requiring users to open specialized cryo-EM software. This
+        capability is especially useful in remote-access or facility-monitoring
+        scenarios.
+
+        Streaming and Incremental Updates
+
+        The protocol is designed to operate continuously while processing is
+        ongoing. Rather than waiting for all calculations to finish, it detects
+        newly available information and incrementally updates the database. This
+        behavior allows ISPyB to reflect the current state of the experiment as
+        closely as possible.
+
+        Because updates occur throughout acquisition and processing, researchers
+        can monitor experiment health and processing progress in near real time.
+        This supports more informed decision making and improves operational
+        efficiency in high-throughput facilities.
+
+        Outputs and Their Interpretation
+
+        The principal output of the protocol is the population and maintenance
+        of experiment records within the ISPyB database. These records describe
+        data collection sessions, acquired movies, motion-correction results,
+        drift measurements, CTF estimates, and associated visualization
+        products.
+
+        The information stored in ISPyB can subsequently be used for facility
+        reporting, project tracking, quality assessment, and long-term data
+        management. Since all processing stages are linked together, users can
+        navigate from acquisition metadata to downstream quality metrics within
+        a unified environment.
+
+        Practical Recommendations
+
+        Users should ensure that acquisition and processing workflows are
+        correctly connected before starting the monitoring process. Accurate
+        visit information is particularly important because it determines where
+        experiment records will be stored and how they will be associated with
+        facility projects.
+
+        During live data collection, it is beneficial to periodically review the
+        reported motion-correction and CTF metrics. Early identification of
+        acquisition problems can prevent significant losses of microscope time
+        and improve the overall quality of the final dataset.
+
+        Database testing environments should be used whenever new workflows are
+        being validated. Once the reporting process has been verified, the same
+        configuration can be applied to production systems with greater
+        confidence.
+
+        Final Perspective
+
+        For cryo-EM facilities and users alike, experiment monitoring is not
+        merely an administrative task but an essential component of quality
+        control and data stewardship. By integrating acquisition metadata,
+        motion-correction results, CTF measurements, and visualization products
+        into a unified ISPyB record, this protocol helps transform ongoing data
+        collection into a transparent, traceable, and scientifically meaningful
+        process.
     """
     _label = 'monitor to ISPyB'
     _lastUpdateVersion = VERSION_1_1
@@ -415,7 +580,7 @@ class ImageGenerator:
         output_root = join(self.images_path, basename(outputName))
         output_file = output_root + '.jpg'
 
-        print "Generating image: ", output_file
+        print("Generating image: ", output_file)
 
         if not exists(output_file):
             from PIL import Image
